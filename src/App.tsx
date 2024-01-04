@@ -10,9 +10,10 @@ const App = () => {
       <Routes>
         <Route>
           <Route path="/admin" element={<Navigation/>}/>
-          <Route path= "/admin/dishes" element={<DishesList/>}/>
-          <Route path= "/admin/orders" element={<OrdersList/>}/>
-          <Route path="/admin/dishes/add" element={<DishForm />} />
+          <Route path="/admin/dishes" element={<DishesList/>}/>
+          <Route path="/admin/orders" element={<OrdersList/>}/>
+          <Route path="/admin/dishes/add" element={<DishForm/>}/>
+          <Route path="/admin/dishes/edit/:id" element={<DishForm/>}/>
         </Route>
       </Routes>
     </>

@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 import Navigation from './Navigation';
 import axiosApi from '../../axiosApi';
-import { RootState } from '../../store/store';
-import {deleteDish, setDishes} from '../../store/dishesSlice';
+import {RootState} from '../../store/store';
+import {deleteDish, setDishes, editDish} from '../../store/dishesSlice';
+import {Dish} from "../../types";
 
 const DishesList: React.FC = () => {
   const dispatch = useDispatch();
   const dishes = useSelector((state: RootState) => state.dishes.dishes);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,8 +24,8 @@ const DishesList: React.FC = () => {
             ...response.data[key],
           });
         }
-
         dispatch(setDishes(loadedDishes));
+
       } catch (error) {
         console.error('Error loading dishes:', error);
       }
@@ -40,9 +42,14 @@ const DishesList: React.FC = () => {
     }
   };
 
+  const handleEdit = (dish: Dish) => {
+    dispatch(editDish(dish));
+    navigate(`/admin/dishes/edit/${dish.id}`);
+  };
+
   return (
     <div>
-      <Navigation />
+      <Navigation/>
       <div className="container mt-3">
         <div className="col-3 text-right text-end">
           <Link to="/admin/dishes/add" className="btn btn-primary btn-sm">
@@ -53,11 +60,17 @@ const DishesList: React.FC = () => {
           <div>
             <div>
               {dishes.map((dish) => (
-                <div key={dish.id} className="border m-3 row row-cols-4">
-                  <img src={dish.image} alt={dish.title} className="m-1" style={{ maxWidth: '80px', maxHeight: '80px' }}/>
+                <div key={dish.id} className="border m-3 row row-cols-6">
+                  <img src={dish.image} alt={dish.title} className="m-1" style={{maxWidth: '80px', maxHeight: '80px'}}/>
                   <h4 className="m-auto">{dish.title}</h4>
                   <p className="m-auto">{dish.price} KGS </p>
-                  <button className="m-auto btn-link" onClick={() => handleDelete(dish.id)}>Delete</button>
+                  <Link to={`/admin/dishes/edit/${dish.id}`} className="m-auto btn-link"
+                        onClick={() => handleEdit(dish)}>
+                    Edit
+                  </Link>
+                  <button className="m-auto btn-link" onClick={() => handleDelete(dish.id)}>
+                    Delete
+                  </button>
                 </div>
               ))}
             </div>

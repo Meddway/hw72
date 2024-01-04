@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import dishesReducer from './dishesSlice';
 
 const store = configureStore({

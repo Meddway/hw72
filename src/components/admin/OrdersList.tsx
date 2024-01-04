@@ -1,10 +1,10 @@
 import React from 'react';
 import Navigation from './Navigation';
 
-const OrdersList:React.FC = () => {
+const OrdersList: React.FC = () => {
   return (
     <div>
-      <Navigation />
+      <Navigation/>
       OrdersList
     </div>
   );

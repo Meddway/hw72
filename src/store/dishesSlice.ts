@@ -1,18 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Dish {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-}
-
-interface DishesState {
-  dishes: Dish[];
-}
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {Dish, DishesState} from "../types";
 
 const initialState: DishesState = {
   dishes: [],
+  editedDish: null,
 };
 
 const dishesSlice = createSlice({
@@ -28,8 +19,11 @@ const dishesSlice = createSlice({
     setDishes: (state, action: PayloadAction<Dish[]>) => {
       state.dishes = action.payload;
     },
+    editDish: (state, action: PayloadAction<Dish | null>) => {
+      state.editedDish = action.payload;
+    },
   },
 });
 
-export const { addDish, deleteDish, setDishes } = dishesSlice.actions;
+export const {addDish, deleteDish, setDishes, editDish} = dishesSlice.actions;
 export default dishesSlice.reducer;
